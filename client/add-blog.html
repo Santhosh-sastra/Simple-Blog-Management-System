@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Blog | Add Blog</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <script src="js/script.js" defer></script>
+  <body>
+    <nav class="navbar">
+      <a class="logo" href="index.html">
+        <img src="images/blog-logo.png" alt="Simple Blog logo" />
+        <span>Simple<span>Blog</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="add-blog.html">Write a Blog</a></li>
+        <li><a href="contact.html">Contact Me</a></li>
+        <button class="theme-toggle" id="themeToggle" type="button">
+          🌙 Dark mode
+        </button>
+      </ul>
+    </nav>
+
+    <main class="form-page">
+      <section class="form-container">
+        <div class="form-intro">
+          <p class="eyebrow">CREATE A POST</p>
+          <h1>Share your story</h1>
+          <p>
+            Write something useful, interesting, or inspiring for your readers.
+          </p>
+        </div>
+
+        <form id="blogForm">
+          <div class="form-group">
+            <label for="title">Blog title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Enter a clear, engaging title"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="author">Author name</label>
+            <input
+              type="text"
+              id="author"
+              name="author"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="content">Blog content</label>
+            <textarea
+              id="content"
+              name="content"
+              rows="9"
+              placeholder="Start writing your blog post here..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="primary-button">Publish Blog</button>
+          <p id="formMessage"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 Simple Blog Management System. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

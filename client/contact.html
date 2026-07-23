@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Blog | Contact Me</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <script src="js/script.js" defer></script>
+  <body>
+    <nav class="navbar">
+      <a class="logo" href="index.html">
+        <img src="images/blog-logo.png" alt="Simple Blog logo" />
+        <span>Simple<span>Blog</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="add-blog.html">Write a Blog</a></li>
+        <li><a class="active" href="contact.html">Contact Me</a></li>
+        <button class="theme-toggle" id="themeToggle" type="button">
+          🌙 Dark mode
+        </button>
+      </ul>
+    </nav>
+
+    <main class="form-page">
+      <section class="form-container">
+        <div class="form-intro">
+          <p class="eyebrow">GET IN TOUCH</p>
+          <h1>Contact Me</h1>
+          <p>Have a question, suggestion, or idea? Send me a message.</p>
+        </div>
+
+        <form>
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              rows="8"
+              placeholder="Write your message here..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="primary-button">Send Message</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 Simple Blog Management System. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Blog | Home</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <script src="js/script.js" defer></script>
+  <body>
+    <nav class="navbar">
+      <a class="logo" href="index.html">
+        <img src="images/blog-logo.png" alt="Simple Blog logo" />
+        <span>Simple<span>Blog</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="add-blog.html">Write a Blog</a></li>
+        <li><a href="contact.html">Contact Me</a></li>
+        <button class="theme-toggle" id="themeToggle" type="button">
+          🌙 Dark mode
+        </button>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">WELCOME TO SIMPLE BLOG</p>
+          <h1>Ideas worth sharing.</h1>
+          <p>
+            Read thoughtful articles, explore new ideas, and share your own
+            stories with the community.
+          </p>
+          <a class="primary-button" href="add-blog.html">Write a Blog</a>
+        </div>
+      </section>
+
+      <section class="blog-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECENT POSTS</p>
+            <h2>Latest Blogs</h2>
+          </div>
+          <a class="text-link" href="add-blog.html">Create a post →</a>
+        </div>
+
+        <div class="blog-list">
+          <article class="blog-card">
+            <div class="card-tag">Getting Started</div>
+            <h3>My First Blog Post</h3>
+            <p>
+              This is a sample blog post. Blog posts will be displayed here in
+              the upcoming days.
+            </p>
+            <a href="#" class="read-more">Read more →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="card-tag">Development</div>
+            <h3>Learning Full Stack Development</h3>
+            <p>
+              Full stack development combines frontend design with backend logic
+              and databases.
+            </p>
+            <a href="#" class="read-more">Read more →</a>
+          </article>
+
+          <article class="blog-card">
+            <div class="card-tag">Community</div>
+            <h3>Share Your Perspective</h3>
+            <p>
+              Every great idea begins with a story. Start writing and make your
+              voice heard.
+            </p>
+            <a href="add-blog.html" class="read-more">Write a post →</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 Simple Blog Management System. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
