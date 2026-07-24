@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Blog | Contact Me</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
   </head>
-  <script src="js/script.js" defer></script>
+
   <body>
     <nav class="navbar">
       <a class="logo" href="index.html">
@@ -18,9 +19,11 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="add-blog.html">Write a Blog</a></li>
         <li><a class="active" href="contact.html">Contact Me</a></li>
-        <button class="theme-toggle" id="themeToggle" type="button">
-          🌙 Dark mode
-        </button>
+        <li>
+          <button class="theme-toggle" id="themeToggle" type="button">
+            🌙 Dark mode
+          </button>
+        </li>
       </ul>
     </nav>
 
@@ -32,7 +35,7 @@
           <p>Have a question, suggestion, or idea? Send me a message.</p>
         </div>
 
-        <form>
+        <form id="contactForm" novalidate>
           <div class="form-group">
             <label for="name">Your name</label>
             <input
@@ -64,6 +67,7 @@
           </div>
 
           <button type="submit" class="primary-button">Send Message</button>
+          <p id="contactMessage" class="form-message" aria-live="polite"></p>
         </form>
       </section>
     </main>
