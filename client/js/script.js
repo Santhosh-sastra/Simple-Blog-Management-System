@@ -122,4 +122,46 @@ document.addEventListener("DOMContentLoaded", () => {
       contactForm.reset();
     });
   }
+
+  /* Load blogs on the Home page */
+  const blogList = document.getElementById("blogList");
+  const emptyMessage = document.getElementById("emptyMessage");
+
+  if (blogList) {
+    fetch("/api/blogs")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Could not load blog posts.");
+        }
+
+        return response.json();
+      })
+      .then((blogs) => {
+        if (blogs.length === 0) {
+          emptyMessage.textContent =
+            "No blogs have been published yet. Be the first to write one!";
+          return;
+        }
+
+        blogList.innerHTML = blogs
+          .map((blog) => {
+            const date = new Date(blog.createdAt).toLocaleDateString();
+
+            return `
+              <article class="blog-card">
+                <div class="card-tag">Published ${date}</div>
+                <h3>${blog.title}</h3>
+                <p class="blog-author">By ${blog.author}</p>
+                <p>${blog.content}</p>
+              </article>
+            `;
+          })
+          .join("");
+      })
+      .catch((error) => {
+        emptyMessage.textContent =
+          "Unable to load blogs. Please make sure the server is running.";
+        console.error(error);
+      });
+  }
 });

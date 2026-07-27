@@ -465,3 +465,16 @@ body.dark-theme .footer {
     font-size: 2.2rem;
   }
 }
+
+/* Dynamic container styles */
+.blog-author {
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.empty-message {
+  color: var(--muted);
+  text-align: center;
+}
