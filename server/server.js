@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname, "../client")));
 
 /* Temporary storage */
 const blogs = [];
+const contactMessages = [];
 
 /* View all blogs */
 app.get("/api/blogs", (req, res) => {
@@ -62,7 +63,7 @@ app.put("/api/blogs/:id", (req, res) => {
     });
   }
 
-  const updatedBlog = {
+  blogs[blogIndex] = {
     ...blogs[blogIndex],
     title: title.trim(),
     author: author.trim(),
@@ -70,11 +71,9 @@ app.put("/api/blogs/:id", (req, res) => {
     updatedAt: new Date().toISOString(),
   };
 
-  blogs[blogIndex] = updatedBlog;
-
   res.status(200).json({
     message: "Blog updated successfully!",
-    blog: updatedBlog,
+    blog: blogs[blogIndex],
   });
 });
 
@@ -96,6 +95,37 @@ app.delete("/api/blogs/:id", (req, res) => {
     message: "Blog deleted successfully!",
     blog: deletedBlog[0],
   });
+});
+
+/* Save a contact message */
+app.post("/api/contact", (req, res) => {
+  const { name, email, message } = req.body;
+
+  if (!name || !email || !message) {
+    return res.status(400).json({
+      message: "Name, email, and message are required.",
+    });
+  }
+
+  const newMessage = {
+    id: Date.now(),
+    name: name.trim(),
+    email: email.trim(),
+    message: message.trim(),
+    createdAt: new Date().toISOString(),
+  };
+
+  contactMessages.push(newMessage);
+
+  res.status(201).json({
+    message: "Your message has been sent successfully!",
+    contact: newMessage,
+  });
+});
+
+/* View received contact messages */
+app.get("/api/contact", (req, res) => {
+  res.status(200).json(contactMessages);
 });
 
 app.listen(PORT, () => {

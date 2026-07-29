@@ -478,3 +478,52 @@ body.dark-theme .footer {
   color: var(--muted);
   text-align: center;
 }
+.blog-author {
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.empty-message,
+.form-message {
+  min-height: 20px;
+  color: var(--muted);
+  text-align: center;
+  font-weight: 600;
+}
+
+.blog-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.edit-button,
+.delete-button {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 7px;
+  color: white;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-button {
+  background: #2563eb;
+}
+
+.edit-button:hover {
+  background: #1d4ed8;
+}
+
+.delete-button {
+  background: #dc2626;
+}
+
+.delete-button:hover {
+  background: #b91c1c;
+}
