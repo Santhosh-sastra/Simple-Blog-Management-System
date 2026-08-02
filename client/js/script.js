@@ -1,5 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "/api/blogs";
+  const isGitHubPages = window.location.hostname.endsWith("github.io");
+
+  const API_URL = isGitHubPages ? null : "/api/blogs";
+  const CONTACT_API_URL = isGitHubPages ? null : "/api/contact";
+
+  async function getJSON(response, fallbackMessage) {
+    const contentType = response.headers.get("content-type") || "";
+
+    if (!contentType.includes("application/json")) {
+      throw new Error(fallbackMessage);
+    }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || fallbackMessage);
+    }
+
+    return data;
+  }
 
   /* Theme toggle */
   const themeToggle = document.getElementById("themeToggle");
@@ -11,7 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateThemeButton() {
       const isDark = document.body.classList.contains("dark-theme");
+
       document.documentElement.classList.toggle("dark-page", isDark);
+
       themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
     }
 
@@ -29,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateThemeButton();
   }
 
-  /* Add Blog: POST request */
+  /* Add Blog form */
   const blogForm = document.getElementById("blogForm");
 
   if (blogForm) {
@@ -67,6 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      if (!API_URL) {
+        formMessage.style.color = "#f59e0b";
+        formMessage.textContent =
+          "This is a frontend demo. Publishing works in the local Express version.";
+        return;
+      }
+
       try {
         const response = await fetch(API_URL, {
           method: "POST",
@@ -80,11 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }),
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Unable to publish the blog.");
-        }
+        await getJSON(response, "Unable to publish the blog.");
 
         formMessage.style.color = "#16a34a";
         formMessage.textContent =
@@ -102,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* Home page: GET, PUT, and DELETE requests */
+  /* Home page: view, edit, and delete blogs */
   const blogList = document.getElementById("blogList");
   const emptyMessage = document.getElementById("emptyMessage");
 
@@ -115,12 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadBlogs() {
     try {
       const response = await fetch(API_URL);
-
-      if (!response.ok) {
-        throw new Error("Unable to load blogs.");
-      }
-
-      const blogs = await response.json();
+      const blogs = await getJSON(response, "Unable to load blogs.");
 
       if (blogs.length === 0) {
         emptyMessage.textContent =
@@ -143,10 +162,10 @@ document.addEventListener("DOMContentLoaded", () => {
               <p>${escapeHTML(blog.content)}</p>
 
               <div class="blog-actions">
-                <button class="edit-button" data-id="${blog.id}">
+                <button type="button" class="edit-button" data-id="${blog.id}">
                   Edit
                 </button>
-                <button class="delete-button" data-id="${blog.id}">
+                <button type="button" class="delete-button" data-id="${blog.id}">
                   Delete
                 </button>
               </div>
@@ -155,110 +174,104 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .join("");
     } catch (error) {
-      emptyMessage.textContent =
-        "Unable to load blogs. Please make sure the server is running.";
+      emptyMessage.textContent = error.message;
     }
   }
 
   if (blogList) {
-    loadBlogs();
+    if (!API_URL) {
+      emptyMessage.textContent =
+        "This is a frontend demo. Blog features work in the local Express version.";
+    } else {
+      loadBlogs();
 
-    blogList.addEventListener("click", async (event) => {
-      const blogId = event.target.dataset.id;
+      blogList.addEventListener("click", async (event) => {
+        const blogId = event.target.dataset.id;
 
-      if (!blogId) {
-        return;
-      }
-
-      /* Delete blog */
-      if (event.target.classList.contains("delete-button")) {
-        const shouldDelete = confirm(
-          "Are you sure you want to delete this blog?",
-        );
-
-        if (!shouldDelete) {
+        if (!blogId) {
           return;
         }
 
-        try {
-          const response = await fetch(`${API_URL}/${blogId}`, {
-            method: "DELETE",
-          });
-
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.message || "Unable to delete the blog.");
-          }
-
-          loadBlogs();
-        } catch (error) {
-          alert(error.message);
-        }
-      }
-
-      /* Edit blog */
-      if (event.target.classList.contains("edit-button")) {
-        const card = event.target.closest(".blog-card");
-
-        const currentTitle = card.querySelector("h3").textContent;
-        const currentAuthor = card
-          .querySelector(".blog-author")
-          .textContent.replace("By ", "");
-
-        const paragraphs = card.querySelectorAll("p");
-        const currentContent = paragraphs[1].textContent;
-
-        const updatedTitle = prompt("Edit blog title:", currentTitle);
-        if (updatedTitle === null) return;
-
-        const updatedAuthor = prompt("Edit author name:", currentAuthor);
-        if (updatedAuthor === null) return;
-
-        const updatedContent = prompt("Edit blog content:", currentContent);
-        if (updatedContent === null) return;
-
-        if (
-          updatedTitle.trim().length < 5 ||
-          updatedAuthor.trim().length < 2 ||
-          updatedContent.trim().length < 20
-        ) {
-          alert(
-            "Title needs 5+ characters, author needs 2+, and content needs 20+.",
+        /* Delete blog */
+        if (event.target.classList.contains("delete-button")) {
+          const shouldDelete = confirm(
+            "Are you sure you want to delete this blog?",
           );
-          return;
-        }
 
-        try {
-          const response = await fetch(`${API_URL}/${blogId}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title: updatedTitle.trim(),
-              author: updatedAuthor.trim(),
-              content: updatedContent.trim(),
-            }),
-          });
-
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.message || "Unable to update the blog.");
+          if (!shouldDelete) {
+            return;
           }
 
-          alert("Blog updated successfully!");
-          loadBlogs();
-        } catch (error) {
-          alert(error.message);
+          try {
+            const response = await fetch(`${API_URL}/${blogId}`, {
+              method: "DELETE",
+            });
+
+            await getJSON(response, "Unable to delete the blog.");
+            loadBlogs();
+          } catch (error) {
+            alert(error.message);
+          }
         }
-      }
-    });
+
+        /* Edit blog */
+        if (event.target.classList.contains("edit-button")) {
+          const card = event.target.closest(".blog-card");
+
+          const currentTitle = card.querySelector("h3").textContent;
+          const currentAuthor = card
+            .querySelector(".blog-author")
+            .textContent.replace("By ", "");
+
+          const paragraphs = card.querySelectorAll("p");
+          const currentContent = paragraphs[1].textContent;
+
+          const updatedTitle = prompt("Edit blog title:", currentTitle);
+          if (updatedTitle === null) return;
+
+          const updatedAuthor = prompt("Edit author name:", currentAuthor);
+          if (updatedAuthor === null) return;
+
+          const updatedContent = prompt("Edit blog content:", currentContent);
+          if (updatedContent === null) return;
+
+          if (
+            updatedTitle.trim().length < 5 ||
+            updatedAuthor.trim().length < 2 ||
+            updatedContent.trim().length < 20
+          ) {
+            alert(
+              "Title needs 5+ characters, author needs 2+, and content needs 20+.",
+            );
+            return;
+          }
+
+          try {
+            const response = await fetch(`${API_URL}/${blogId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                title: updatedTitle.trim(),
+                author: updatedAuthor.trim(),
+                content: updatedContent.trim(),
+              }),
+            });
+
+            await getJSON(response, "Unable to update the blog.");
+
+            alert("Blog updated successfully!");
+            loadBlogs();
+          } catch (error) {
+            alert(error.message);
+          }
+        }
+      });
+    }
   }
 
-  /* Contact form validation */
-  /* Contact form: validate and send to Express */
+  /* Contact form */
   const contactForm = document.getElementById("contactForm");
 
   if (contactForm) {
@@ -295,8 +308,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      if (!CONTACT_API_URL) {
+        contactMessage.style.color = "#f59e0b";
+        contactMessage.textContent =
+          "This is a frontend demo. Contact messages work in the local Express version.";
+        return;
+      }
+
       try {
-        const response = await fetch("/api/contact", {
+        const response = await fetch(CONTACT_API_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -308,11 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }),
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Unable to send the message.");
-        }
+        await getJSON(response, "Unable to send the message.");
 
         contactMessage.style.color = "#16a34a";
         contactMessage.textContent =
