@@ -1,55 +1,71 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Blog | Home</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/script.js" defer></script>
-</head>
-<body>
-  <nav class="navbar">
-    <a class="logo" href="index.html">
-      <img src="images/blog-logo.png" alt="Simple Blog logo" />
-      <span>Simple<span>Blog</span></span>
-    </a>
-    <ul class="nav-links">
-      <li><a class="active" href="index.html">Home</a></li>
-      <li><a href="add-blog.html">Write a Blog</a></li>
-      <li><a href="contact.html">Contact Me</a></li>
-      <button class="theme-toggle" id="themeToggle" type="button">
-        🌙 Dark mode
-      </button>
-    </ul>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Blog | Home</title>
 
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <p class="eyebrow">WELCOME TO SIMPLE BLOG</p>
-        <h1>Ideas worth sharing.</h1>
-        <p>
-          Read thoughtful articles, explore new ideas, and share your own stories with the community.
-        </p>
-        <a class="primary-button" href="add-blog.html">Write a Blog</a>
-      </div>
-    
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark-page");
+      }
+    </script>
 
-    <section class="blog-section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">RECENT POSTS</p>
-          <h2>Latest Blogs</h2>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <a class="logo" href="index.html">
+        <img src="images/blog-logo.png" alt="Simple Blog logo" />
+        <span>Simple<span>Blog</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="add-blog.html">Write a Blog</a></li>
+        <li><a href="contact.html">Contact Me</a></li>
+        <li>
+          <button class="theme-toggle" id="themeToggle" type="button">
+            🌙 Dark mode
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">WELCOME TO SIMPLE BLOG</p>
+          <h1>Ideas worth sharing.</h1>
+          <p>
+            Read thoughtful articles, explore new ideas, and share your own
+            stories with the community.
+          </p>
+
+          <a class="primary-button" href="add-blog.html">Write a Blog</a>
+          <a class="secondary-button" href="#latest-blogs">Explore Posts</a>
         </div>
-        <a class="text-link" href="add-blog.html">Create a post →</a>
-      </div>
-      <div class="blog-list" id="blogList"></div>
-      <p id="emptyMessage" class="empty-message"></p>
-    
-  </main>
+      </section>
 
-  <footer class="footer">
-    <p>© 2026 Simple Blog Management System. All rights reserved.</p>
-  </footer>
-</body>
+      <section class="blog-section" id="latest-blogs">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECENT POSTS</p>
+            <h2>Latest Blogs</h2>
+          </div>
+
+          <a class="text-link" href="add-blog.html">Create a post →</a>
+        </div>
+
+        <div class="blog-list" id="blogList"></div>
+        <p id="emptyMessage" class="empty-message"></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© 2026 Simple Blog Management System. All rights reserved.</p>
+    </footer>
+  </body>
 </html>

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateThemeButton() {
       const isDark = document.body.classList.contains("dark-theme");
-
+      document.documentElement.classList.toggle("dark-page", isDark);
       themeToggle.textContent = isDark ? "☀️ Light mode" : "🌙 Dark mode";
     }
 
@@ -200,30 +200,31 @@ document.addEventListener("DOMContentLoaded", () => {
       /* Edit blog */
       if (event.target.classList.contains("edit-button")) {
         const card = event.target.closest(".blog-card");
+
         const currentTitle = card.querySelector("h3").textContent;
         const currentAuthor = card
           .querySelector(".blog-author")
           .textContent.replace("By ", "");
-        const currentContent = card.querySelector(
-          "p:not(.blog-author)",
-        ).textContent;
 
-        const title = prompt("Edit blog title:", currentTitle);
-        if (title === null) return;
+        const paragraphs = card.querySelectorAll("p");
+        const currentContent = paragraphs[1].textContent;
 
-        const author = prompt("Edit author name:", currentAuthor);
-        if (author === null) return;
+        const updatedTitle = prompt("Edit blog title:", currentTitle);
+        if (updatedTitle === null) return;
 
-        const content = prompt("Edit blog content:", currentContent);
-        if (content === null) return;
+        const updatedAuthor = prompt("Edit author name:", currentAuthor);
+        if (updatedAuthor === null) return;
+
+        const updatedContent = prompt("Edit blog content:", currentContent);
+        if (updatedContent === null) return;
 
         if (
-          title.trim().length < 5 ||
-          author.trim().length < 2 ||
-          content.trim().length < 20
+          updatedTitle.trim().length < 5 ||
+          updatedAuthor.trim().length < 2 ||
+          updatedContent.trim().length < 20
         ) {
           alert(
-            "Use a title of 5+ characters, author name of 2+ characters, and content of 20+ characters.",
+            "Title needs 5+ characters, author needs 2+, and content needs 20+.",
           );
           return;
         }
@@ -235,9 +236,9 @@ document.addEventListener("DOMContentLoaded", () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              title: title.trim(),
-              author: author.trim(),
-              content: content.trim(),
+              title: updatedTitle.trim(),
+              author: updatedAuthor.trim(),
+              content: updatedContent.trim(),
             }),
           });
 
@@ -247,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error(data.message || "Unable to update the blog.");
           }
 
+          alert("Blog updated successfully!");
           loadBlogs();
         } catch (error) {
           alert(error.message);

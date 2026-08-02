@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Blog | Contact Me</title>
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark-page");
+      }
+    </script>
     <link rel="stylesheet" href="css/style.css" />
     <script src="js/script.js" defer></script>
   </head>
@@ -28,7 +33,7 @@
     </nav>
 
     <main class="form-page">
-      <section class="form-container">
+      <section class="form-container contact-container">
         <div class="form-intro">
           <p class="eyebrow">GET IN TOUCH</p>
           <h1>Contact Me</h1>

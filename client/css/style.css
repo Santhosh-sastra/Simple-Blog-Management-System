@@ -12,6 +12,14 @@
   --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
+html {
+  background: #f8fafc;
+}
+
+html.dark-page {
+  background: #0f172a;
+}
+
 .form-message {
   min-height: 20px;
   text-align: center;
@@ -526,4 +534,180 @@ body.dark-theme .footer {
 
 .delete-button:hover {
   background: #b91c1c;
+}
+/* Day 11: animations, transitions, hover effects, and smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+#latest-blogs {
+  scroll-margin-top: 95px;
+}
+
+/* Hero animation */
+.hero-content {
+  animation: slide-up 0.8s ease-out both;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Second hero button */
+.secondary-button {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 13px 21px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary);
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.secondary-button:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Navbar movement */
+.logo,
+.nav-links a,
+.theme-toggle {
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.03);
+}
+
+.nav-links a:hover {
+  transform: translateY(-2px);
+}
+
+/* Blog card animation and hover */
+.blog-card {
+  animation: fade-in-card 0.6s ease-out both;
+}
+
+.blog-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.blog-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes fade-in-card {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.blog-card:hover {
+  border-color: #93c5fd;
+}
+
+/* Buttons */
+.primary-button,
+.edit-button,
+.delete-button,
+.theme-toggle {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.primary-button:hover,
+.edit-button:hover,
+.delete-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.2);
+}
+
+/* Contact page animation */
+.contact-container {
+  animation: contact-appear 0.7s ease-out both;
+}
+
+@keyframes contact-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Form interactions */
+.form-group label {
+  transition: color 0.2s ease;
+}
+
+.form-group:focus-within label {
+  color: var(--primary);
+}
+
+input,
+textarea {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  transform: translateY(-1px);
+}
+
+/* Footer */
+.footer p {
+  transition: color 0.2s ease;
+}
+
+.footer:hover p {
+  color: white;
+}
+
+/* Accessibility: disables movement for users who prefer less animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mobile button spacing */
+@media (max-width: 560px) {
+  .secondary-button {
+    margin-top: 12px;
+    margin-left: 0;
+  }
 }
