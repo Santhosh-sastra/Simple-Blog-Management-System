@@ -106,3 +106,8 @@ Alapati Santhosh Kumar
 ## Learning Journey
 
 This project was developed step by step through HTML, CSS, JavaScript, Express.js, REST APIs, Fetch API, GitHub Pages, responsive design, and performance cleanup.
+
+## github-pages
+
+https://santhosh-sastra.github.io/Simple-Blog-Management-System/
+
