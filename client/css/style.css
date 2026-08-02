@@ -711,3 +711,69 @@ textarea:focus {
     margin-left: 0;
   }
 }
+/* Day 13: responsive and usability improvements */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.blog-actions {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    padding: 16px 6%;
+  }
+
+  .hero {
+    padding: 58px 7%;
+  }
+
+  .hero h1 {
+    font-size: 2.8rem;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .blog-card {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-links {
+    gap: 5px;
+  }
+
+  .nav-links a,
+  .theme-toggle {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+
+  .hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    margin: 8px 0 0;
+    text-align: center;
+  }
+
+  .blog-actions button {
+    flex: 1;
+  }
+}
